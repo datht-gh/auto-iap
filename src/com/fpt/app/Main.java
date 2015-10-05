@@ -63,9 +63,11 @@ this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize()
         logList = new javax.swing.JList();
         jToolBar1 = new javax.swing.JToolBar();
         jLabel4 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Auto IAP.FPT.EDU.VN for Lecturers");
+        setTitle("Auto IAP.FPT.EDU.VN");
         setAlwaysOnTop(true);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
@@ -84,7 +86,7 @@ this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize()
         jLabel3.setText("Class No.");
 
         logList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Phần mềm tự động điểm danh theo Slot đầu tiên của 1 lớp học.", "Hướng dẫn sử dụng:", "1. Điểm danh slot 1 trước khi chạy phần mềm", " ", "2. Điền đầy đủ thông tin:", "Username Google Account ex: user@fpt.edu.vn", "Password Google Account ex: ********", "CLass No. ex: GC12345", " ", "3. Click Start", "Chương trình sẽ chạy tự động vui lòng ko click lung tung.. Done !", " ", "-------------------------------------------------------------------------", "Copyright 2015 - user@fpt.edu.vn", " ", "------------------------------Logger-----------------------------------", " ", " ", " " };
+            String[] strings = { "Auto IAP - Auto attendance student in IAP System", "Version 2.0.0", "https://git.hanoweb.com/datht/auto-iap", "Step 1 ", "   Input your username & password ex: user@fpt.edu.vn ******", "   (Check box for auto check all student in slot 1)", "   Click Start button", "Step 2 ", "  Attendance  slot 1 in Chrome Window", "  Click submit button in Chrome Window", "Step 3\t", "  Wating for app auto attendance like slot 1", " ", "----------Change Log------------", " ", "2.0.0 ", " - Add auto check all student in slot 1", " - Add crypto username & password", " ", "1.1.3", " - Administration permision in window", " ", "1.1.2", " - Exe file", " ", "1.1.0", " - Check Attendance was taken Exception", " ", "1.0.0", " - Release", " ", " ", " ", " ", " " };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
@@ -93,6 +95,8 @@ this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize()
         jToolBar1.setRollover(true);
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/fpt/fpt.png"))); // NOI18N
+
+        jLabel5.setText("Auto check all slot 1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -117,12 +121,17 @@ this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize()
                                         .addComponent(jLabel2)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
+                                    .addComponent(classTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(classTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(27, 27, 27)
-                                        .addComponent(startBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                        .addComponent(jLabel5)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jCheckBox1)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(startBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
@@ -135,15 +144,17 @@ this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(userTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(classTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(startBtn)
-                    .addComponent(passTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(passTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCheckBox1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -216,10 +227,12 @@ this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize()
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField classTxt;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JList logList;

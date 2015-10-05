@@ -15,6 +15,7 @@ import java.io.ObjectOutputStream;
 import java.util.LinkedList;
 import java.util.List;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -33,6 +34,7 @@ public class AutoIAP {
     public static String[] slots;
     public static List<Student> students;
     public static int count;
+    public static boolean autoCheckSlot1 = false;
 
     public static Config loadConfigFile() throws IOException, ClassNotFoundException {
         File file = new File("config.dat");
@@ -89,11 +91,7 @@ public class AutoIAP {
             //  System.out.println(e.getText());
             if (e.getText().contains(className)) {
 
-                if (c == 0) {
-                    main = e.getAttribute("href").replaceAll("http://iap.fpt.edu.vn/activity/index.php", "http://iap.fpt.edu.vn/attendance/edit.php");
-                } else {
-                    main = e.getAttribute("href").replaceAll("http://iap.fpt.edu.vn/activity/index.php", "http://iap.fpt.edu.vn/attendance/add.php");
-                }
+                main = e.getAttribute("href").replaceAll("http://iap.fpt.edu.vn/activity/index.php", "http://iap.fpt.edu.vn/attendance/add.php");
 
                 slots[c] = main;
                 c++;
@@ -104,22 +102,53 @@ public class AutoIAP {
         }
 
         driver.get(slots[0]);
-        List<WebElement> elsInput = driver.findElements(By.xpath(".//input[@type='radio' and @value='1' and @checked]"));
 
-        System.out.println("Size input checked:" + elsInput.size());
+        try {
+            new WebDriverWait(driver, 5).until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//font[@type='submit']")));
 
-        for (WebElement e : elsInput) {
-            Student student = new Student();
-            student.name = e.getAttribute("name");
-            students.add(student);
+        } catch (TimeoutException ex) {
+            driver.get(slots[0].replaceAll("add.php", "edit.php"));
 
         }
+        //Auto Check Slot 1
+        List<WebElement> elsInput = driver.findElements(By.xpath(".//input[@type='radio' and @value='1' ]"));
+
+        if (autoCheckSlot1) {
+            autoCheckAll(elsInput);
+        }
+
+        //Wating for submit
+        new WebDriverWait(driver, 5000).until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//font[@color='green']")));
+
+        //GET All checked
+        List<WebElement> elsInputChecked = driver.findElements(By.xpath(".//input[@type='radio' and @value='1' and @checked]"));
+
+        System.out.println("Size input checked:" + elsInputChecked.size());
+
+        elsInputChecked.stream().map((e) -> {
+            Student student = new Student();
+            student.name = e.getAttribute("name");
+            return student;
+        }).forEach((student) -> {
+            students.add(student);
+        });
+
+    }
+
+    public static void autoCheckAll(List<WebElement> wels) {
+        WebElement first = wels.get(0);
+
+        wels.stream().forEach((e) -> {
+            e.click();
+        });
+        // sroll to top
+        first.click();
 
     }
 
     public static void autoCheck() {
-        int c = 0;
-        for (c = 1; c < count; c++) {
+
+        for (int c = 1; c < count; c++) {
 
             driver.get(slots[c]);
             try {
@@ -143,13 +172,13 @@ public class AutoIAP {
             }
             el = driver.findElement(By.xpath(".//input[@type='submit']"));
             el.click();
-               try {
-            new WebDriverWait(driver, 3).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(".//input[@type='submit']")));
-               }catch (TimeoutException ex) {
-                   break;
+            try {
+                new WebDriverWait(driver, 3).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(".//input[@type='submit']")));
+            } catch (TimeoutException ex) {
+                break;
 
             }
-            
+
         }
 
     }
