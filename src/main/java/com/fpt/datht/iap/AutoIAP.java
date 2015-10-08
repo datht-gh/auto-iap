@@ -21,7 +21,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import play.libs.Crypto;
 
 /**
  *
@@ -104,7 +103,7 @@ public class AutoIAP {
         driver.get(slots[0]);
 
         try {
-            new WebDriverWait(driver, 5).until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//font[@type='submit']")));
+            new WebDriverWait(driver, 5).until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//input[@type='submit']")));
 
         } catch (TimeoutException ex) {
             driver.get(slots[0].replaceAll("add.php", "edit.php"));
@@ -118,7 +117,7 @@ public class AutoIAP {
 
         //Wating for submit
         new WebDriverWait(driver, 5000).until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//font[@color='green']")));
-
+        driver.get(slots[0].replaceAll("add.php", "edit.php"));
         //GET All checked
         List<WebElement> elsInputChecked = driver.findElements(By.xpath(".//input[@type='radio' and @value='1' and @checked]"));
 
